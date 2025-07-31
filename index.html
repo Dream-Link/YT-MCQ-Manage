@@ -14,101 +14,86 @@
         }
         .app-view { display: none; }
         .app-view.active { display: block; }
-        .container { width: 100%; background-color: var(--surface-color); box-sizing: border-box; min-height: 100vh; position: relative; }
+        .container { width: 100%; background-color: var(--surface-color); box-sizing: border-box; min-height: 100vh; position: relative; padding: 28px; }
 
-        /* Link Input View */
-        #link-view .container { padding: 28px; }
-        #link-view { text-align: center; padding-top: 80px; }
+        /* --- Link (Home) View --- */
+        #link-view .container { padding-top: 60px; text-align: center; }
         #link-view h2 { font-size: 2em; margin-bottom: 25px; color: var(--text-primary); }
-        #youtube-link-input { width: 100%; max-width: 600px; padding: 14px; font-size: 1.1em; border: 2px solid var(--border-color); border-radius: 12px; box-sizing: border-box; margin-bottom: 20px; text-align: center; }
+        #resume-prompt { display: none; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 12px; padding: 20px; margin: 0 auto 20px auto; max-width: 600px; }
+        #resume-prompt p { margin: 0 0 15px 0; font-size: 1.1em; color: #856404; }
+        #resume-prompt button { padding: 10px 20px; border-radius: 8px; border: none; font-size: 1em; font-weight: bold; cursor: pointer; }
+        #resume-yes-btn { background-color: var(--success-color); color: white; }
+        #resume-no-btn { background-color: var(--danger-color); color: white; margin-left: 10px; }
+        .input-wrapper { position: relative; display: inline-block; width: 100%; max-width: 600px; margin-bottom: 20px; }
+        #youtube-link-input { width: 100%; max-width: 600px; padding: 14px; font-size: 1.1em; border: 2px solid var(--border-color); border-radius: 12px; box-sizing: border-box; text-align: center; padding-right: 45px; }
+        #clear-link-btn { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: none; border: none; font-size: 1.6em; color: var(--text-secondary); cursor: pointer; padding: 5px; display: none; }
         #yt-play-btn { background-color: var(--success-color); color: white; font-size: 1.2em; font-weight: bold; border: none; padding: 14px 30px; border-radius: 12px; cursor: pointer; transition: background-color 0.2s; }
-        
-        /* OMR Player View */
-        #omr-view .container { padding: 28px; }
-        #yt-player-wrapper { max-width: 900px; margin: 20px auto; transition: all 0.3s ease; }
-        #youtube-player { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background-color: #000; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        #youtube-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #history-btn { position: absolute; top: 20px; right: 20px; background-color: var(--surface-color); color: var(--primary-color); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 1em; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 
+        /* --- OMR View --- */
+        #yt-player-wrapper {
+            max-width: 900px; margin: 20px auto;
+            position: relative; padding-bottom: 56.25%; height: 0;
+            overflow: hidden; background-color: #000; border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        #yt-player-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        
         /* Portrait Controls */
         #yt-omr-controls-normal { max-width: 700px; margin: 25px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 16px; display: none; flex-direction: column; gap: 20px; align-items: center; }
-        #yt-omr-controls-normal .nav-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        #yt-omr-controls-normal .nav-btn { background: none; border: none; font-size: 1.8em; color: var(--primary-color); cursor: pointer; }
-        #yt-omr-controls-normal .nav-btn:disabled { color: var(--border-color); }
-        #yt-q-indicator-normal { font-size: 1.5em; font-weight: 700; color: var(--text-primary); }
-        #yt-omr-controls-normal .status-buttons { display: flex; gap: 10px; flex-wrap: nowrap; justify-content: center; }
-        #yt-omr-controls-normal .status-buttons button { padding: 15px 25px; font-size: 1.1em; font-weight: 600; border-radius: 10px; border: 2px solid transparent; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        #yt-omr-controls-normal .status-buttons button.correct { background-color: #eaf7ed; color: #2a6f3d; }
-        #yt-omr-controls-normal .status-buttons button.incorrect { background-color: #fdeaea; color: #9c2b2b; }
-        #yt-omr-controls-normal .status-buttons button.skip { background-color: #e9ecef; color: #495057; }
-        #yt-omr-controls-normal .status-buttons button.selected { color: white; transform: scale(1.05); }
-        #yt-omr-controls-normal .status-buttons button.correct.selected { background-color: var(--success-color); }
-        #yt-omr-controls-normal .status-buttons button.incorrect.selected { background-color: var(--danger-color); }
-        #yt-omr-controls-normal .status-buttons button.skip.selected { background-color: var(--skip-color); }
-        #youtube-finish-btn-normal { background-color: var(--primary-color); color: white; padding: 12px 30px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; }
-        
-        /* Landscape Controls */
-        #yt-omr-controls-compact {
-            display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            width: auto; height: 52px;
-            padding: 0 10px; border-radius: 50px;
-            background: rgba(28, 28, 30, 0.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 2100; align-items: center; gap: 5px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-        }
-        .drag-handle { color: rgba(255, 255, 255, 0.4); font-size: 1.5em; cursor: grab; padding: 0 8px; }
-        .drag-handle:active { cursor: grabbing; }
-        #yt-omr-controls-compact .nav-btn { font-size: 1.4em; color: white; padding: 0 5px; background: none; border: none; cursor: pointer;}
-        #yt-omr-controls-compact .nav-btn:disabled { color: rgba(255,255,255,0.3); }
-        #yt-q-indicator-compact { font-weight: 600; font-size: 1em; color: white; padding: 0 5px;}
-        #yt-omr-controls-compact .status-buttons { display: flex; gap: 5px; margin: 0 5px; }
-        #yt-omr-controls-compact .status-buttons button { font-size: 0.9em; font-weight: 600; padding: 8px 12px; border-radius: 12px; border: none; background: rgba(255,255,255,0.15); color: white; display: flex; align-items: center; gap: 6px; cursor: pointer;}
-        #yt-omr-controls-compact .status-buttons button .fa-solid { font-size: 1.2em; }
-        #yt-omr-controls-compact .status-buttons button.selected { color: white; }
-        #yt-omr-controls-compact .status-buttons .correct.selected { background: var(--success-color); }
-        #yt-omr-controls-compact .status-buttons .incorrect.selected { background: var(--danger-color); }
-        #yt-omr-controls-compact .status-buttons .skip.selected { background: var(--skip-color); }
-        #youtube-finish-btn-compact { background: var(--primary-color); color:white; font-size:1em; font-weight: 600; border-radius: 20px; border:none; padding: 8px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer;}
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .nav-btn { background: none; border: none; font-size: 1.8em; color: var(--primary-color); cursor: pointer; }
+        .nav-btn:disabled { color: var(--border-color); }
+        .q-indicator { font-size: 1.5em; font-weight: 700; color: var(--text-primary); }
+        .status-buttons { display: flex; gap: 10px; flex-wrap: nowrap; justify-content: center; }
+        .status-buttons button { padding: 15px 25px; font-size: 1.1em; font-weight: 600; border-radius: 10px; border: 2px solid transparent; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .status-buttons button.selected { color: white; transform: scale(1.05); }
+        .status-buttons .correct { background-color: #eaf7ed; color: #2a6f3d; } .status-buttons .correct.selected { background-color: var(--success-color); }
+        .status-buttons .incorrect { background-color: #fdeaea; color: #9c2b2b; } .status-buttons .incorrect.selected { background-color: var(--danger-color); }
+        .status-buttons .skip { background-color: #e9ecef; color: #495057; } .status-buttons .skip.selected { background-color: var(--skip-color); }
+        .notes-wrapper { width: 100%; max-width: 550px; }
+        .notes-wrapper label { display: block; text-align: left; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); font-size: 1em; }
+        #yt-question-notes { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-family: inherit; font-size: 1em; resize: vertical; }
+        .main-actions { display: flex; gap: 15px; }
+        .main-actions button { padding: 12px 30px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; color: white; display:flex; align-items:center; gap:8px;}
+        .finish-btn { background-color: var(--primary-color); }
+        .pause-btn { background-color: var(--skip-color); color: #1c1c1e !important; }
 
-        /* Fullscreen Video in Landscape */
-        .fullscreen-video #yt-player-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2000; margin: 0; }
-        .fullscreen-video #youtube-player { border-radius: 0; padding-bottom: 0; height: 100%; }
-        .fullscreen-video .container { padding: 0; }
+        /* Landscape Controls */
+        #yt-omr-controls-compact { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); height: 52px; padding: 0 10px; border-radius: 50px; background: rgba(28, 28, 30, 0.85); backdrop-filter: blur(18px); z-index: 2100; align-items: center; gap: 5px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+        .drag-handle { color: rgba(255, 255, 255, 0.4); font-size: 1.5em; cursor: grab; padding:0 8px; }
+        #yt-omr-controls-compact .q-indicator-compact { font-weight: 600; font-size: 1em; color: white; padding: 0 5px;}
+        #yt-omr-controls-compact .nav-btn { font-size: 1.4em; padding: 0 5px; }
+        #yt-omr-controls-compact .status-buttons button { padding: 8px 12px; font-size: 0.9em; border-radius: 12px; background: rgba(255,255,255,0.15); color:white; }
+        #yt-omr-controls-compact .pause-btn, #yt-omr-controls-compact .finish-btn { border-radius: 12px; padding: 8px 12px; font-size:1.4em; }
         
-        /* Results View */
-        #results-view .container { padding: 40px 20px; }
-        #results-view { max-width: 800px; margin: auto; text-align: center; }
-        #report-heading-input { font-size: 2em; font-weight: bold; border: none; text-align: center; background: none; padding: 10px; margin-bottom: 10px; width: 100%; color: var(--text-primary); }
-        #report-video-link { margin-bottom: 25px; word-break: break-all; }
-        #report-video-link a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
-        #report-summary { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; font-weight: 500; margin-bottom: 30px; }
-        #report-summary > span { background-color: white; padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); }
-        #youtube-results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .result-item { background-color: white; padding: 15px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
-        .result-item .q-num { font-size: 1.2em; color: var(--text-primary); }
-        .result-item .icon { font-size: 1.5em; }
-        .result-item .correct-icon { color: var(--success-color); }
-        .result-item .incorrect-icon { color: var(--danger-color); }
-        .result-item .skip-icon { color: var(--text-secondary); }
-        #print-btn { font-size: 1.1em; font-weight: bold; padding: 12px 25px; cursor: pointer; background-color: var(--text-secondary); color: white; border: none; border-radius: 10px; }
+        /* Landscape Fullscreen Video */
+        .fullscreen-video #yt-player-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2000; margin: 0; border-radius:0; }
+        .fullscreen-video #yt-omr-controls-normal { display: none !important; }
         
-        @media print {
-            body, .container { background-color: white; }
-            body * { visibility: hidden; }
-            #results-view, #results-view * { visibility: visible; }
-            #results-view { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; margin: 0; box-shadow: none; }
-            #print-btn, #report-video-link { display: none; }
-            #report-summary > span, .result-item { box-shadow: none; border: 1px solid var(--border-color); }
-            #report-heading-input { border: none; -webkit-print-color-adjust: exact; color: black !important; }
-        }
+        /* --- Results & History --- */
+        #results-view .container, #history-view .container { max-width: 800px; margin: auto; }
+        #report-heading-input{font-size:2em;font-weight:700;border:none;text-align:center;background:0 0;padding:10px;margin-bottom:10px;width:100%;color:var(--text-primary)}#report-video-link{margin-bottom:25px;word-break:break-all;text-align:center}#report-video-link a{color:var(--primary-color);text-decoration:none;font-weight:500}#report-summary{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;font-weight:500;margin-bottom:20px;align-items:stretch}.summary-card,.score-card{background-color:#fff;padding:10px 20px;border-radius:20px;border:1px solid var(--border-color);display:flex;align-items:center;gap:8px}.score-card{flex-direction:column;gap:5px;padding:12px 22px}.score-card .score-value{font-weight:700;font-size:1.4em}.score-card .score-label{font-weight:500;font-size:.9em;color:var(--primary-color);background-color:#e8f2ff;padding:3px 8px;border-radius:8px}.progress-container{width:100%;background:#fff;padding:15px;border-radius:12px;border:1px solid var(--border-color);box-sizing:border-box;margin-bottom:10px}.progress-label{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px;color:var(--text-primary)}.progress-bar-outer{width:100%;height:20px;background-color:#e9ecef;border-radius:10px;overflow:hidden}.progress-bar-inner{height:100%;background-color:var(--primary-color);border-radius:10px;transition:width .5s ease-in-out}#youtube-results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px;margin-bottom:30px}.result-item{background-color:#fff;padding:15px;border-radius:12px;display:flex;flex-direction:column;align-items:flex-start;box-shadow:0 4px 12px #00000012}.result-item-header{display:flex;align-items:center;justify-content:space-between;font-weight:600;width:100%}.result-item .q-num{font-size:1.2em}.result-item .icon{font-size:1.5em}.correct-icon{color:var(--success-color)}.incorrect-icon{color:var(--danger-color)}.skip-icon{color:var(--text-secondary)}.timestamp-link{color:var(--primary-color);text-decoration:none;font-size:1.3em;margin-left:8px}.result-note{font-size:.9em;font-weight:400;color:var(--text-secondary);width:100%;padding-top:10px;margin-top:10px;border-top:1px solid var(--border-color);white-space:pre-wrap;word-wrap:break-word}#results-actions{text-align:center;display:flex;justify-content:center;gap:15px;flex-wrap:wrap}#results-actions button{font-size:1.1em;font-weight:700;padding:12px 25px;cursor:pointer;color:#fff;border:none;border-radius:10px;display:flex;align-items:center;gap:8px}#print-btn{background-color:var(--text-secondary)}#save-report-btn{background-color:var(--primary-color)}#history-view h2{text-align:center}#history-list{list-style:none;padding:0}.history-item{background:#fff;border:1px solid var(--border-color);border-radius:12px;padding:15px;margin-bottom:10px;cursor:pointer}.history-item:hover{box-shadow:0 4px 12px #00000014}.history-item h3{margin:0 0 10px;font-size:1.2em;color:var(--text-primary);word-break:break-all}.history-item p{margin:0;color:var(--text-secondary);font-size:.9em}#history-actions{margin-top:30px;text-align:center;display:flex;justify-content:center;gap:15px}#back-to-home-btn,#clear-history-btn{font-size:1.1em;font-weight:700;padding:12px 25px;cursor:pointer;border:none;border-radius:10px;color:#fff}#back-to-home-btn{background-color:var(--text-secondary)}#clear-history-btn{background-color:var(--danger-color)}
     </style>
 </head>
 <body>
+    <script src="https://www.youtube.com/iframe_api"></script>
 
-    <div id="link-view" class="app-view active">
+    <div id="link-view" class="app-view">
         <div class="container">
+            <button id="history-btn"><i class="fa-solid fa-clock-rotate-left"></i> <span>हिस्ट्री</span></button>
+            <div id="resume-prompt">
+                <p>आपका एक अधूरा टेस्ट मिला है। क्या आप वहीं से शुरू करना चाहेंगे?</p>
+                <button id="resume-yes-btn">हाँ, शुरू करें</button>
+                <button id="resume-no-btn">नहीं, नया बनाएं</button>
+            </div>
             <h2>YouTube Video OMR</h2>
-            <input type="text" id="youtube-link-input" placeholder="यहाँ YouTube वीडियो का लिंक पेस्ट करें">
+            <div class="input-wrapper">
+                <input type="text" id="youtube-link-input" placeholder="यहाँ YouTube वीडियो का लिंक पेस्ट करें">
+                <button id="clear-link-btn" title="Clear Input"><i class="fa-solid fa-xmark"></i></button>
+            </div>
             <button id="yt-play-btn">Play Video</button>
         </div>
     </div>
@@ -116,35 +101,41 @@
     <div id="omr-view" class="app-view">
         <div class="container">
             <div id="yt-player-wrapper">
-                <div id="youtube-player"></div>
+                <div id="player-target"></div>
             </div>
-            
             <div id="yt-omr-controls-normal">
                 <div class="nav-bar">
-                    <button class="nav-btn" id="yt-prev-btn"><i class="fas fa-chevron-left"></i></button>
-                    <span id="yt-q-indicator-normal"></span>
-                    <button class="nav-btn" id="yt-next-btn"><i class="fas fa-chevron-right"></i></button>
+                    <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <span class="q-indicator"></span>
+                    <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div class="status-buttons">
                     <button class="correct"><i class="fa-solid fa-check"></i> <span>सही</span></button>
                     <button class="incorrect"><i class="fa-solid fa-xmark"></i> <span>गलत</span></button>
                     <button class="skip"><i class="fa-solid fa-forward"></i> <span>स्किप</span></button>
                 </div>
-                <button id="youtube-finish-btn-normal">Finish</button>
+                <div class="notes-wrapper">
+                    <label for="yt-question-notes">नोट्स</label>
+                    <textarea id="yt-question-notes" rows="4" placeholder="इस प्रश्न के लिए नोट्स लिखें..."></textarea>
+                </div>
+                <div class="main-actions">
+                    <button class="pause-btn"><i class="fas fa-pause"></i> Pause & Save</button>
+                    <button class="finish-btn"><i class="fas fa-flag-checkered"></i> Finish</button>
+                </div>
             </div>
         </div>
-
         <div id="yt-omr-controls-compact">
             <i class="fas fa-grip-lines drag-handle"></i>
-            <button class="nav-btn" id="yt-prev-btn-compact"><i class="fas fa-chevron-left"></i></button>
-            <span id="yt-q-indicator-compact"></span>
-            <button class="nav-btn" id="yt-next-btn-compact"><i class="fas fa-chevron-right"></i></button>
+            <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <span class="q-indicator-compact"></span>
+            <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
             <div class="status-buttons">
-                <button class="correct"><i class="fa-solid fa-check"></i> <span>सही</span></button>
-                <button class="incorrect"><i class="fa-solid fa-xmark"></i> <span>गलत</span></button>
-                <button class="skip"><i class="fa-solid fa-forward"></i> <span>स्किप</span></button>
+                 <button class="correct"><i class="fa-solid fa-check"></i></button>
+                 <button class="incorrect"><i class="fa-solid fa-xmark"></i></button>
+                 <button class="skip"><i class="fa-solid fa-forward"></i></button>
             </div>
-            <button id="youtube-finish-btn-compact"><i class="fas fa-flag-checkered"></i><span>FINISH</span></button>
+            <button class="pause-btn"><i class="fas fa-pause"></i></button>
+            <button class="finish-btn"><i class="fas fa-flag-checkered"></i></button>
         </div>
     </div>
 
@@ -153,254 +144,274 @@
             <input type="text" id="report-heading-input" value="Test Report">
             <div id="report-video-link"></div>
             <div id="report-summary"></div>
+            <div id="progress-bars-container"></div>
             <div id="youtube-results-grid"></div>
-            <button id="print-btn"><i class="fas fa-print"></i> रिपोर्ट प्रिंट करें</button>
+            <div id="results-actions">
+                <button id="save-report-btn"><i class="fas fa-save"></i> रिपोर्ट सेव करें</button>
+                <button id="print-btn"><i class="fas fa-print"></i> रिपोर्ट प्रिंट करें</button>
+            </div>
          </div>
     </div>
 
+    <div id="history-view" class="app-view">
+        <div class="container">
+            <h2>सेव की गई रिपोर्ट्स</h2>
+            <ul id="history-list"></ul>
+            <div id="history-actions">
+                 <button id="back-to-home-btn">होम पर वापस जाएं</button>
+                 <button id="clear-history-btn">पूरी हिस्ट्री साफ़ करें</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Elements ---
-            const views = document.querySelectorAll('.app-view');
-            const ytPlayBtn = document.getElementById('yt-play-btn');
-            const youtubeLinkInput = document.getElementById('youtube-link-input');
-            const youtubePlayer = document.getElementById('youtube-player');
-            const omrView = document.getElementById('omr-view');
-            
-            const controlsNormal = document.getElementById('yt-omr-controls-normal');
-            const controlsCompact = document.getElementById('yt-omr-controls-compact');
+    document.addEventListener('DOMContentLoaded', () => {
+        const views = { link: document.getElementById('link-view'), omr: document.getElementById('omr-view'), results: document.getElementById('results-view'), history: document.getElementById('history-view') };
+        const resumePrompt = document.getElementById('resume-prompt');
+        const questionNotes = document.getElementById('yt-question-notes');
+        let player, ytCurrentQuestionNum = 1, ytMaxQuestionNum = 1, ytAnswers = [], originalVideoUrl = '', videoId = '';
 
-            const prevBtn = document.getElementById('yt-prev-btn');
-            const nextBtn = document.getElementById('yt-next-btn');
-            const prevBtnCompact = document.getElementById('yt-prev-btn-compact');
-            const nextBtnCompact = document.getElementById('yt-next-btn-compact');
-            
-            const qIndicatorNormal = document.getElementById('yt-q-indicator-normal');
-            const qIndicatorCompact = document.getElementById('yt-q-indicator-compact');
-            
-            const dragHandle = controlsCompact.querySelector('.drag-handle');
+        function initialize() {
+            checkForPausedTest();
+            setupEventListeners();
+            const currentHash = window.location.hash.slice(1) || 'link-view';
+            const viewKey = Object.keys(views).find(k => views[k].id === currentHash) || 'link';
+            updateView(viewKey);
+        }
 
-            const reportVideoLink = document.getElementById('report-video-link');
-            const reportSummary = document.getElementById('report-summary');
-            const youtubeResultsGrid = document.getElementById('youtube-results-grid');
-            const printBtn = document.getElementById('print-btn');
+        function updateView(viewKey) {
+            const newHash = '#' + views[viewKey].id;
+            if (window.location.hash !== newHash) { history.pushState({ view: viewKey }, '', newHash); }
+            for (const key in views) { views[key].classList.toggle('active', key === viewKey); }
+            if (viewKey === 'history') renderHistory();
+            if (viewKey === 'omr') checkOrientation();
+        }
 
-            // --- State ---
-            let ytCurrentQuestionNum = 1;
-            let ytMaxQuestionNum = 1;
-            let ytAnswers = [];
-            let originalVideoUrl = '';
+        window.onpopstate = (e) => updateView(e.state?.view || 'link');
 
-            // --- View & Orientation Management ---
-            function navigateTo(hash) {
-                if (window.location.hash !== hash) {
-                    history.pushState({ hash }, '', hash);
-                }
-                updateView(hash);
+        function getYouTubeID(url) {
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            return url.match(regex)?.[1] || null;
+        }
+
+        window.onYouTubeIframeAPIReady = () => {};
+
+        function createPlayer(videoId, startTime = 0, autoplay = 1) {
+            player?.destroy();
+            player = new YT.Player('player-target', {
+                height: '100%', width: '100%', videoId,
+                playerVars: { autoplay, rel: 0, start: Math.floor(startTime), iv_load_policy: 3, modestbranding: 1 },
+                events: { onReady: onPlayerReady }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            renderYTQuestion(ytCurrentQuestionNum);
+            if (event.target.getPlayerVars().autoplay === 0) { event.target.pauseVideo(); }
+        }
+
+        function checkOrientation() {
+            const isLandscape = window.innerWidth > window.innerHeight && window.innerHeight < 700;
+            views.omr.classList.toggle('fullscreen-video', isLandscape);
+            document.getElementById('yt-omr-controls-normal').style.display = isLandscape ? 'none' : 'flex';
+            document.getElementById('yt-omr-controls-compact').style.display = isLandscape ? 'flex' : 'none';
+        }
+
+        function resetState() {
+            ytCurrentQuestionNum = 1; ytMaxQuestionNum = 1; ytAnswers = [];
+            renderYTQuestion(1);
+        }
+
+        function renderYTQuestion(qNum) {
+            document.querySelector('#yt-omr-controls-normal .q-indicator').textContent = `प्रश्न ${qNum}`;
+            document.querySelector('#yt-omr-controls-compact .q-indicator-compact').textContent = `Q${qNum}`;
+            const isFirstQ = qNum <= 1, isLastQ = qNum >= ytMaxQuestionNum;
+            document.querySelectorAll('.prev-btn').forEach(b => b.disabled = isFirstQ);
+            document.querySelectorAll('.next-btn').forEach(b => b.disabled = isLastQ);
+            const answer = getAnswerObject(qNum);
+            document.querySelectorAll('.status-buttons button').forEach(btn => btn.classList.remove('selected'));
+            if (answer.status) {
+                document.querySelectorAll(`.status-buttons .${answer.status}`).forEach(btn => btn.classList.add('selected'));
             }
+            questionNotes.value = answer.note || '';
+        }
 
-            function updateView(hash) {
-                views.forEach(view => {
-                    view.classList.toggle('active', '#' + view.id === hash);
+        function getAnswerObject(qNum) {
+            let answer = ytAnswers.find(a => a.question === qNum);
+            if (!answer) {
+                answer = { question: qNum, status: null, note: '', timestamp: null };
+                ytAnswers.push(answer);
+            }
+            return answer;
+        }
+
+        function handleYTSubmit(status) {
+            const answer = getAnswerObject(ytCurrentQuestionNum);
+            const isAlreadySelected = answer.status === status;
+            answer.status = isAlreadySelected ? null : status;
+            answer.timestamp = player?.getCurrentTime() || null;
+            if (!isAlreadySelected) {
+                if (ytCurrentQuestionNum === ytMaxQuestionNum) ytMaxQuestionNum++;
+                setTimeout(() => {
+                    ytCurrentQuestionNum++;
+                    renderYTQuestion(ytCurrentQuestionNum);
+                }, 200);
+            } else {
+                renderYTQuestion(ytCurrentQuestionNum);
+            }
+        }
+        
+        function checkForPausedTest() {
+            if (localStorage.getItem('omrInProgress')) { resumePrompt.style.display = 'block'; }
+        }
+
+        function resumeTest(progressData) {
+            ({ videoUrl: originalVideoUrl, videoId, answers: ytAnswers, currentQuestion: ytCurrentQuestionNum, maxQuestion: ytMaxQuestionNum } = progressData);
+            updateView('omr');
+            createPlayer(videoId, progressData.videoTime, 0);
+        }
+        
+        function pauseAndSaveProgress() {
+            if (!player?.getCurrentTime) return;
+            player.pauseVideo();
+            localStorage.setItem('omrInProgress', JSON.stringify({
+                videoUrl: originalVideoUrl, videoId, answers: ytAnswers,
+                currentQuestion: ytCurrentQuestionNum, maxQuestion: ytMaxQuestionNum,
+                videoTime: player.getCurrentTime(),
+            }));
+            alert('प्रोग्रेस सेव हो गई है!');
+            updateView('link');
+        }
+
+        function clearInProgress() { localStorage.removeItem('omrInProgress'); }
+
+        function finishAndShowReport() {
+            if (window.confirm("क्या आप वाकई टेस्ट समाप्त करना चाहते हैं?")) {
+                player?.stopVideo();
+                clearInProgress();
+                generateReport({
+                    videoUrl: originalVideoUrl,
+                    heading: `Test Report: ${new Date().toLocaleDateString()}`,
+                    answers: JSON.parse(JSON.stringify(ytAnswers))
                 });
             }
+        }
 
-            function checkOrientation() {
-                const isLandscape = window.innerWidth > window.innerHeight;
-                omrView.classList.toggle('fullscreen-video', isLandscape);
-                if (omrView.classList.contains('active')) {
-                    if (isLandscape) {
-                        controlsNormal.style.display = 'none';
-                        controlsCompact.style.display = 'flex';
-                    } else {
-                        controlsNormal.style.display = 'flex';
-                        controlsCompact.style.display = 'none';
-                    }
-                }
-            }
+        function generateReport(reportData) {
+            const { videoUrl, heading, answers } = reportData;
+            const reportVideoId = getYouTubeID(videoUrl);
+            const resultsView = views.results;
+            resultsView.querySelector('#report-heading-input').value = heading;
+            resultsView.querySelector('#report-video-link').innerHTML = `<strong>वीडियो लिंक:</strong> <a href="${videoUrl}" target="_blank">${videoUrl}</a>`;
             
-            window.onpopstate = (event) => {
-                const hash = (event.state && event.state.hash) ? event.state.hash : '#link-view';
-                updateView(hash);
-            };
+            const correct = answers.filter(a => a.status === 'correct').length;
+            const incorrect = answers.filter(a => a.status === 'incorrect').length;
+            const skipped = answers.filter(a => a.status === 'skip' || a.status === null).length;
+            const totalAttempted = correct + incorrect;
+
+            const score1_3 = correct - (incorrect / 3), score1_4 = correct - (incorrect / 4);
+            const percent1_3 = totalAttempted === 0 ? 0 : Math.max(0, (score1_3 / totalAttempted) * 100);
+            const percent1_4 = totalAttempted === 0 ? 0 : Math.max(0, (score1_4 / totalAttempted) * 100);
+
+            resultsView.querySelector('#report-summary').innerHTML = `
+                <div class="summary-card"><i class="fa-solid fa-circle-check" style="color:var(--success-color)"></i> सही: ${correct}</div>
+                <div class="summary-card"><i class="fa-solid fa-circle-xmark" style="color:var(--danger-color)"></i> गलत: ${incorrect}</div>
+                <div class="summary-card"><i class="fa-solid fa-circle-minus" style="color:var(--text-secondary)"></i> स्किप: ${skipped}</div>
+            `;
+            resultsView.querySelector('#progress-bars-container').innerHTML = `
+                <div class="progress-container"><div class="progress-label"><span>1/3 मार्किंग: ${score1_3.toFixed(2)}</span><span>${percent1_3.toFixed(1)}%</span></div><div class="progress-bar-outer"><div class="progress-bar-inner" style="width: ${percent1_3}%;"></div></div></div>
+                <div class="progress-container"><div class="progress-label"><span>1/4 मार्किंग: ${score1_4.toFixed(2)}</span><span>${percent1_4.toFixed(1)}%</span></div><div class="progress-bar-outer"><div class="progress-bar-inner" style="width: ${percent1_4}%; background-color: var(--success-color);"></div></div></div>`;
             
-            const currentHash = window.location.hash || '#link-view';
-            history.replaceState({ hash: currentHash }, '', currentHash);
-            updateView(currentHash);
-            window.addEventListener('resize', checkOrientation);
-
-            // --- Main OMR Logic ---
-            function getYouTubeID(url) {
-                const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-                return url.match(regex) ? url.match(regex)[1] : null;
-            }
-
-            ytPlayBtn.addEventListener('click', () => {
-                const videoId = getYouTubeID(youtubeLinkInput.value);
-                if (videoId) {
-                    originalVideoUrl = youtubeLinkInput.value;
-                    youtubePlayer.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                    navigateTo('#omr-view');
-                    checkOrientation();
-                    renderYTQuestion(ytCurrentQuestionNum);
-                } else {
-                    alert('कृपया एक सही यूट्यूब वीडियो लिंक डालें।');
+            const grid = resultsView.querySelector('#youtube-results-grid');
+            grid.innerHTML = '';
+            answers.sort((a, b) => a.question - b.question).forEach(ans => {
+                if (!ans.status && !ans.note) return;
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                const iconMap = { correct: 'fa-square-check correct-icon', incorrect: 'fa-square-xmark incorrect-icon', skip: 'fa-square-minus skip-icon' };
+                const icon = `<span class="icon"><i class="fa-solid ${iconMap[ans.status] || 'fa-regular fa-square skip-icon'}"></i></span>`;
+                const time = Math.floor(ans.timestamp || 0);
+                const link = ans.timestamp ? `<a href="https://youtu.be/${reportVideoId}&t=${time}s" target="_blank" class="timestamp-link"><i class="fa-solid fa-link"></i></a>` : '';
+                item.innerHTML = `<div class="result-item-header"><span class="q-num">Q${ans.question}</span><div>${icon} ${link}</div></div>` + (ans.note ? `<div class="result-note">${ans.note.replace(/</g, "<").replace(/>/g, ">")}</div>` : '');
+                grid.appendChild(item);
+            });
+            updateView('results');
+        }
+        
+        function renderHistory() {
+             const historyList = views.history.querySelector('#history-list');
+             historyList.innerHTML = '';
+             const history = JSON.parse(localStorage.getItem('omrHistory') || '[]');
+             if (history.length === 0) { historyList.innerHTML = '<p style="text-align:center;">कोई सेव की गई रिपोर्ट नहीं है।</p>'; return; }
+             history.reverse().forEach((report, index) => {
+                 const item = document.createElement('li');
+                 item.className = 'history-item';
+                 item.innerHTML = `<h3>${report.heading}</h3><p>${new Date(report.savedAt).toLocaleString()}</p>`;
+                 item.addEventListener('click', () => {
+                     const allReports = JSON.parse(localStorage.getItem('omrHistory'));
+                     generateReport(allReports[history.length - 1 - index]);
+                 });
+                 historyList.appendChild(item);
+             });
+        }
+        
+        function setupEventListeners() {
+            document.getElementById('yt-play-btn').addEventListener('click', () => {
+                const id = getYouTubeID(document.getElementById('youtube-link-input').value);
+                if (id) {
+                    videoId = id; originalVideoUrl = document.getElementById('youtube-link-input').value;
+                    resetState(); updateView('omr'); createPlayer(id, 0, 1);
+                } else alert('कृपया एक सही यूट्यूब वीडियो लिंक डालें।');
+            });
+            document.getElementById('resume-yes-btn').addEventListener('click', () => {
+                resumePrompt.style.display = 'none';
+                resumeTest(JSON.parse(localStorage.getItem('omrInProgress')));
+            });
+            document.getElementById('resume-no-btn').addEventListener('click', () => {
+                clearInProgress(); resumePrompt.style.display = 'none';
+            });
+            document.getElementById('history-btn').addEventListener('click', () => updateView('history'));
+            document.getElementById('back-to-home-btn').addEventListener('click', () => updateView('link'));
+            document.getElementById('clear-history-btn').addEventListener('click', () => {
+                if (confirm("क्या आप वाकई पूरी हिस्ट्री हटाना चाहते हैं?") && confirm("यह आखिरी चेतावनी है। निश्चित हैं?")) {
+                    localStorage.removeItem('omrHistory'); renderHistory();
                 }
             });
-
-            function renderYTQuestion(qNum) {
-                qIndicatorNormal.textContent = `प्रश्न ${qNum}`;
-                qIndicatorCompact.textContent = `Q${qNum}`;
-                
-                // Note: The next button '>' is only for visiting questions you've already answered.
-                // It will be disabled on the current, last question.
-                const isFirstQ = qNum <= 1;
-                const isLastQ = qNum >= ytMaxQuestionNum;
-                [prevBtn, prevBtnCompact].forEach(b => { b.disabled = isFirstQ; });
-                [nextBtn, nextBtnCompact].forEach(b => { b.disabled = isLastQ; });
-
-                const answer = ytAnswers.find(a => a.question === qNum);
-                document.querySelectorAll('.status-buttons button').forEach(btn => btn.classList.remove('selected'));
-
-                if (answer && answer.status) {
-                    document.querySelectorAll(`.status-buttons .${answer.status}`).forEach(btn => btn.classList.add('selected'));
-                }
-            }
+            const linkInput = document.getElementById('youtube-link-input');
+            const clearBtn = document.getElementById('clear-link-btn');
+            clearBtn.addEventListener('click', () => { linkInput.value = ''; clearBtn.style.display = 'none'; });
+            linkInput.addEventListener('input', () => { clearBtn.style.display = linkInput.value ? 'block' : 'none'; });
+            questionNotes.addEventListener('input', () => { getAnswerObject(ytCurrentQuestionNum).note = questionNotes.value; });
             
-            function getAnswerObject(qNum) {
-                let answer = ytAnswers.find(a => a.question === qNum);
-                if (!answer) {
-                    answer = { question: qNum, status: null };
-                    ytAnswers.push(answer);
-                }
-                return answer;
-            }
-
-            function handleYTSubmit(status) {
-                const answer = getAnswerObject(ytCurrentQuestionNum);
-                const isAlreadySelected = answer.status === status;
-                
-                answer.status = isAlreadySelected ? null : status; 
-                
-                if (!isAlreadySelected) {
-                    if (ytCurrentQuestionNum === ytMaxQuestionNum) {
-                        ytMaxQuestionNum++;
-                    }
-                    setTimeout(() => {
-                        ytCurrentQuestionNum++;
-                        renderYTQuestion(ytCurrentQuestionNum);
-                    }, 200);
-                } else {
-                     renderYTQuestion(ytCurrentQuestionNum);
-                }
-            }
-
-            function finishOMR() {
-                if (window.confirm("क्या आप वाकई टेस्ट समाप्त करना चाहते हैं?")) {
-                    navigateTo('#results-view');
-                    youtubePlayer.innerHTML = '';
-                    
-                    const correctCount = ytAnswers.filter(a => a.status === 'correct').length;
-                    const incorrectCount = ytAnswers.filter(a => a.status === 'incorrect').length;
-                    const skipCount = ytAnswers.filter(a => a.status === 'skip').length;
-                    reportSummary.innerHTML = `
-                        <span><i class="fa-solid fa-circle-check" style="color: var(--success-color);"></i> सही: ${correctCount}</span>
-                        <span><i class="fa-solid fa-circle-xmark" style="color: var(--danger-color);"></i> गलत: ${incorrectCount}</span>
-                        <span><i class="fa-solid fa-circle-minus" style="color: var(--text-secondary);"></i> स्किप: ${skipCount}</span>
-                    `;
-                    
-                    reportVideoLink.innerHTML = `<strong>वीडियो लिंक:</strong> <a href="${originalVideoUrl}" target="_blank" rel="noopener noreferrer">${originalVideoUrl}</a>`;
-
-                    youtubeResultsGrid.innerHTML = '';
-                    ytAnswers.sort((a,b) => a.question - b.question).forEach(ans => {
-                        if (!ans.status) return; // Don't show unanswered questions
-                        const item = document.createElement('div');
-                        item.className = 'result-item';
-                        
-                        let icon = '';
-                        if (ans.status === 'correct') icon = '<span class="icon correct-icon"><i class="fa-solid fa-square-check"></i></span>';
-                        else if (ans.status === 'incorrect') icon = '<span class="icon incorrect-icon"><i class="fa-solid fa-square-xmark"></i></span>';
-                        else icon = '<span class="icon skip-icon"><i class="fa-solid fa-square-minus"></i></span>';
-                        
-                        item.innerHTML = `<span class="q-num">Q${ans.question}</span> ${icon}`;
-                        youtubeResultsGrid.appendChild(item);
-                    });
-                }
-            }
-
-            // --- Event Listeners Setup ---
-            function goToPrevQuestion() { if (ytCurrentQuestionNum > 1) { ytCurrentQuestionNum--; renderYTQuestion(ytCurrentQuestionNum); } }
-            function goToNextQuestion() { if (ytCurrentQuestionNum < ytMaxQuestionNum) { ytCurrentQuestionNum++; renderYTQuestion(ytCurrentQuestionNum); } }
-
-            [prevBtn, prevBtnCompact].forEach(btn => btn.addEventListener('click', goToPrevQuestion));
-            [nextBtn, nextBtnCompact].forEach(btn => btn.addEventListener('click', goToNextQuestion));
+            document.querySelectorAll('.prev-btn').forEach(b => b.addEventListener('click', () => { if (ytCurrentQuestionNum > 1) renderYTQuestion(--ytCurrentQuestionNum); }));
+            document.querySelectorAll('.next-btn').forEach(b => b.addEventListener('click', () => { if (ytCurrentQuestionNum < ytMaxQuestionNum) renderYTQuestion(++ytCurrentQuestionNum); }));
+            document.querySelectorAll('.status-buttons .correct').forEach(b => b.addEventListener('click', () => handleYTSubmit('correct')));
+            document.querySelectorAll('.status-buttons .incorrect').forEach(b => b.addEventListener('click', () => handleYTSubmit('incorrect')));
+            document.querySelectorAll('.status-buttons .skip').forEach(b => b.addEventListener('click', () => handleYTSubmit('skip')));
+            document.querySelectorAll('.finish-btn').forEach(b => b.addEventListener('click', finishAndShowReport));
+            document.querySelectorAll('.pause-btn').forEach(b => b.addEventListener('click', pauseAndSaveProgress));
             
-            document.querySelectorAll('.status-buttons .correct').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('correct')));
-            document.querySelectorAll('.status-buttons .incorrect').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('incorrect')));
-            document.querySelectorAll('.status-buttons .skip').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('skip')));
-            document.querySelectorAll('#youtube-finish-btn-normal, #youtube-finish-btn-compact').forEach(btn => btn.addEventListener('click', finishOMR));
-            printBtn.addEventListener('click', () => window.print());
-
-            // --- Draggable Bar Logic (For Mouse and Touch) ---
-            function makeDraggable(element, handle) {
-                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-                handle.addEventListener('mousedown', dragStart);
-                handle.addEventListener('touchstart', dragStart, { passive: false });
-
-                function dragStart(e) {
-                    if (e.type === 'touchstart') {
-                        pos3 = e.touches[0].clientX;
-                        pos4 = e.touches[0].clientY;
-                    } else {
-                        e.preventDefault();
-                        pos3 = e.clientX;
-                        pos4 = e.clientY;
-                    }
-                    
-                    const rect = element.getBoundingClientRect();
-                    element.style.transform = 'none';
-                    element.style.left = `${rect.left}px`;
-                    element.style.top = `${rect.top}px`;
-                    
-                    document.addEventListener('mouseup', dragEnd);
-                    document.addEventListener('touchend', dragEnd);
-                    document.addEventListener('mousemove', elementDrag);
-                    document.addEventListener('touchmove', elementDrag, { passive: false });
+            document.getElementById('save-report-btn').addEventListener('click', () => {
+                const history = JSON.parse(localStorage.getItem('omrHistory') || '[]');
+                history.push({
+                    videoUrl: originalVideoUrl, heading: document.getElementById('report-heading-input').value,
+                    answers: ytAnswers, savedAt: new Date().toISOString()
+                });
+                localStorage.setItem('omrHistory', JSON.stringify(history));
+                alert('रिपोर्ट सफलतापूर्वक सेव हो गई!');
+            });
+            document.getElementById('print-btn').addEventListener('click', () => window.print());
+            window.addEventListener('resize', checkOrientation);
+            window.addEventListener('beforeunload', (e) => {
+                if (views.omr.classList.contains('active')) {
+                    e.preventDefault();
+                    e.returnValue = '';
                 }
+            });
+        }
 
-                function elementDrag(e) {
-                    if (e.type === 'touchmove') {
-                        e.preventDefault(); // Prevent page scrolling on touch
-                    }
-
-                    let clientX, clientY;
-                    if (e.type.includes('touch')) {
-                        clientX = e.touches[0].clientX;
-                        clientY = e.touches[0].clientY;
-                    } else {
-                        clientX = e.clientX;
-                        clientY = e.clientY;
-                    }
-
-                    pos1 = pos3 - clientX;
-                    pos2 = pos4 - clientY;
-                    pos3 = clientX;
-                    pos4 = clientY;
-                    
-                    element.style.top = `${element.offsetTop - pos2}px`;
-                    element.style.left = `${element.offsetLeft - pos1}px`;
-                }
-
-                function dragEnd() {
-                    document.removeEventListener('mouseup', dragEnd);
-                    document.removeEventListener('touchend', dragEnd);
-                    document.removeEventListener('mousemove', elementDrag);
-                    document.removeEventListener('touchmove', elementDrag);
-                }
-            }
-            makeDraggable(controlsCompact, dragHandle);
-        });
+        initialize();
+    });
     </script>
 </body>
 </html>
