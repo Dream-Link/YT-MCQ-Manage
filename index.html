@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #007aff; --success-color: #28a745; --danger-color: #dc3545; --skip-color: #0d6efd; --background-color: #f2f2f7; --surface-color: #ffffff; --text-primary: #1c1c1e; --text-secondary: #6e6e73; --border-color: #e0e0e0;
+            --primary-color: #007aff; --success-color: #28a745; --danger-color: #dc3545; --skip-color: #ffc107; --background-color: #f2f2f7; --surface-color: #ffffff; --text-primary: #1c1c1e; --text-secondary: #6e6e73; --border-color: #e0e0e0;
         }
         html, body {
             margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--background-color);
         }
         .app-view { display: none; }
         .app-view.active { display: block; }
-        .container { width: 100%; background-color: var(--surface-color); padding: 28px; box-sizing: border-box; min-height: 100vh; position: relative; }
+        .container { width: 100%; background-color: var(--surface-color); box-sizing: border-box; min-height: 100vh; position: relative; }
 
         /* --- Link Input View --- */
+        #link-view .container { padding: 28px; }
         #link-view { text-align: center; padding-top: 80px; }
         #link-view h2 { font-size: 2em; margin-bottom: 25px; color: var(--text-primary); }
         #youtube-link-input { width: 100%; max-width: 600px; padding: 14px; font-size: 1.1em; border: 2px solid var(--border-color); border-radius: 12px; box-sizing: border-box; margin-bottom: 20px; text-align: center; }
@@ -24,64 +25,61 @@
         #yt-play-btn:hover { background-color: #238b3c; }
 
         /* --- OMR Player View --- */
-        #omr-view { padding-top: 20px; }
-        #yt-player-wrapper { max-width: 900px; margin: 0 auto; transition: all 0.3s ease; }
+        #omr-view .container { padding: 28px; }
+        #yt-player-wrapper { max-width: 900px; margin: 20px auto; transition: all 0.3s ease; }
         #youtube-player { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background-color: #000; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         #youtube-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* --- Shared Control Styles --- */
-        .nav-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .nav-btn { background: none; border: none; font-size: 1.8em; color: var(--primary-color); cursor: pointer; }
-        .nav-btn:disabled { color: var(--border-color); cursor: not-allowed; }
-        .status-buttons { display: flex; gap: 10px; flex-wrap: nowrap; justify-content: center; }
-        .status-buttons button { padding: 10px 18px; font-size: 1em; font-weight: 600; border-radius: 10px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
-        .mcq-options { display: flex; gap: 10px; align-items: center; }
-        .mcq-options button { border: 2px solid var(--border-color); background-color: white; color: var(--text-secondary); border-radius: 50%; width: 44px; height: 44px; font-weight: bold; cursor: pointer; font-size: 1em; }
-        .mcq-options button.selected { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
-        
         /* Normal (Portrait) Controls */
-        #yt-omr-controls-normal { max-width: 700px; margin: 25px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 16px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        #yt-omr-controls-normal { max-width: 700px; margin: 25px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 16px; display: none; flex-direction: column; gap: 20px; align-items: center; }
+        #yt-omr-controls-normal .nav-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        #yt-omr-controls-normal .nav-btn { background: none; border: none; font-size: 1.8em; color: var(--primary-color); cursor: pointer; }
+        #yt-omr-controls-normal .nav-btn:disabled { color: var(--border-color); }
         #yt-q-indicator-normal { font-size: 1.5em; font-weight: 700; color: var(--text-primary); }
+        #yt-omr-controls-normal .status-buttons { display: flex; gap: 10px; flex-wrap: nowrap; justify-content: center; }
+        #yt-omr-controls-normal .status-buttons button { padding: 15px 25px; font-size: 1.1em; font-weight: 600; border-radius: 10px; border: 2px solid transparent; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         #yt-omr-controls-normal .status-buttons button.correct { background-color: #eaf7ed; color: #2a6f3d; }
         #yt-omr-controls-normal .status-buttons button.incorrect { background-color: #fdeaea; color: #9c2b2b; }
         #yt-omr-controls-normal .status-buttons button.skip { background-color: #e9ecef; color: #495057; }
-        #yt-omr-controls-normal .status-buttons button.correct.selected { background-color: var(--success-color); color: white; transform: scale(1.05); }
-        #yt-omr-controls-normal .status-buttons button.incorrect.selected { background-color: var(--danger-color); color: white; transform: scale(1.05); }
-        #yt-omr-controls-normal .status-buttons button.skip.selected { background-color: var(--skip-color); color: white; transform: scale(1.05); }
+        #yt-omr-controls-normal .status-buttons button.selected { color: white; transform: scale(1.05); }
+        #yt-omr-controls-normal .status-buttons button.correct.selected { background-color: var(--success-color); }
+        #yt-omr-controls-normal .status-buttons button.incorrect.selected { background-color: var(--danger-color); }
+        #yt-omr-controls-normal .status-buttons button.skip.selected { background-color: var(--skip-color); }
         #youtube-finish-btn-normal { background-color: var(--primary-color); color: white; padding: 12px 30px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; }
         
         /* Compact (Landscape) Controls */
         #yt-omr-controls-compact {
-            display: none; position: fixed; bottom: 20px;
-            width: 750px; height: 60px;
-            border-radius: 50px;
-            padding: 8px;
-            background: rgba(25, 25, 25, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: auto; height: 52px;
+            padding: 0 10px; border-radius: 50px;
+            background: rgba(28, 28, 30, 0.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            align-items: center;
-            gap: 12px;
-            z-index: 2000;
-            color: white;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
-            box-sizing: border-box;
-            flex-wrap: nowrap;
+            z-index: 2100;
+            align-items: center; gap: 5px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
         }
-        #yt-q-indicator-compact { font-weight: 600; font-size: 1.1em; pointer-events: none; padding: 0 10px; }
-        #yt-omr-controls-compact .mcq-options button { background-color: rgba(255,255,255,0.15); color: white; border-color: transparent; }
-        #yt-omr-controls-compact .mcq-options button.selected { background-color: var(--primary-color); border-color: white; }
-        #yt-omr-controls-compact .status-buttons { gap: 5px; }
-        #yt-omr-controls-compact .status-buttons button { padding: 8px 16px; font-size: 0.9em; border-radius: 30px; border: none; background: rgba(255,255,255,0.15); color: white; }
-        #yt-omr-controls-compact .status-buttons button.correct.selected { background: var(--success-color); }
-        #yt-omr-controls-compact .status-buttons button.incorrect.selected { background: var(--danger-color); }
-        #yt-omr-controls-compact .status-buttons button.skip.selected { background: var(--skip-color); }
-        #youtube-finish-btn-compact { background: var(--primary-color); border:none; color:white; font-size:1.2em; border-radius: 50%; width: 40px; height: 40px; flex-shrink: 0; margin-left: auto; }
-        .drag-handle { color: rgba(255, 255, 255, 0.5); font-size: 1.2em; cursor: grab; padding: 5px 10px; }
+        .drag-handle { color: rgba(255, 255, 255, 0.4); font-size: 1.5em; cursor: grab; padding: 0 8px; }
         .drag-handle:active { cursor: grabbing; }
+        #yt-omr-controls-compact .nav-btn { font-size: 1.4em; color: white; padding: 0 5px; background: none; border: none; cursor: pointer;}
+        #yt-omr-controls-compact .nav-btn:disabled { color: rgba(255,255,255,0.3); }
+        #yt-q-indicator-compact { font-weight: 600; font-size: 1em; color: white; padding: 0 5px;}
+        #yt-omr-controls-compact .status-buttons { display: flex; gap: 5px; margin: 0 5px; }
+        #yt-omr-controls-compact .status-buttons button { font-size: 0.9em; font-weight: 600; padding: 8px 12px; border-radius: 12px; border: none; background: rgba(255,255,255,0.15); color: white; display: flex; align-items: center; gap: 6px; cursor: pointer;}
+        #yt-omr-controls-compact .status-buttons button .fa-solid { font-size: 1.2em; }
+        #yt-omr-controls-compact .status-buttons button.selected { color: white; }
+        #yt-omr-controls-compact .status-buttons .correct.selected { background: var(--success-color); }
+        #yt-omr-controls-compact .status-buttons .incorrect.selected { background: var(--danger-color); }
+        #yt-omr-controls-compact .status-buttons .skip.selected { background: var(--skip-color); }
+        #youtube-finish-btn-compact { background: var(--primary-color); color:white; font-size:1em; font-weight: 600; border-radius: 20px; border:none; padding: 8px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer;}
 
-        /* --- Results View -- STYLES UPDATED HERE --- */
-        #results-view { padding: 40px 20px; max-width: 800px; margin: auto; text-align: center; }
+        /* Fullscreen Video in Landscape */
+        .fullscreen-video #yt-player-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2000; margin: 0; }
+        .fullscreen-video #youtube-player { border-radius: 0; }
+        .fullscreen-video .container { padding: 0; }
+        
+        /* --- Results View --- */
+        #results-view .container { padding: 40px 20px; }
+        #results-view { max-width: 800px; margin: auto; text-align: center; }
         #report-heading-input { font-size: 2em; font-weight: bold; border: none; text-align: center; background: none; padding: 10px; margin-bottom: 10px; width: 100%; color: var(--text-primary); border-bottom: 2px solid transparent; transition: border-bottom 0.2s; }
         #report-heading-input:focus { outline: none; border-bottom: 2px solid var(--primary-color); }
         #report-video-link { margin-bottom: 25px; word-break: break-all; }
@@ -89,32 +87,21 @@
         #report-summary { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; font-weight: 500; margin-bottom: 30px; }
         #report-summary > span { background-color: white; padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border-color); }
         #youtube-results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .result-item { background-color: white; padding: 15px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+        .result-item { background-color: white; padding: 15px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
         .result-item .q-num { font-size: 1.2em; color: var(--text-primary); }
-        .result-item .result-mcq { background-color: var(--border-color); color: var(--text-secondary); border-radius: 50%; width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.9em; }
         .result-item .icon { font-size: 1.5em; }
         .result-item .correct-icon { color: var(--success-color); }
         .result-item .incorrect-icon { color: var(--danger-color); }
         .result-item .skip-icon { color: var(--text-secondary); }
         #print-btn { font-size: 1.1em; font-weight: bold; padding: 12px 25px; cursor: pointer; background-color: var(--text-secondary); color: white; border: none; border-radius: 10px; }
-
-        /* --- Media Queries --- */
-        @media (orientation: landscape) {
-            #omr-view.active #yt-player-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1500; margin: 0; max-width: none; }
-            #omr-view.active #youtube-player { border-radius: 0; }
-            #yt-omr-controls-normal { display: none; }
-            #yt-omr-controls-compact { display: flex; }
-        }
-        @media (orientation: portrait) {
-            #yt-omr-controls-normal { display: flex; }
-            #yt-omr-controls-compact { display: none; }
-        }
+        
         @media print {
             body, .container { background-color: white; }
             body * { visibility: hidden; }
             #results-view, #results-view * { visibility: visible; }
             #results-view { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; margin: 0; box-shadow: none; }
-            #print-btn, #report-summary > span, .result-item { box-shadow: none; border: 1px solid var(--border-color); }
+            #print-btn, #report-video-link { display: none; }
+            #report-summary > span, .result-item { box-shadow: none; border: 1px solid var(--border-color); }
             #report-heading-input { border: none; -webkit-print-color-adjust: exact; color: black !important; }
         }
     </style>
@@ -134,17 +121,12 @@
             <div id="yt-player-wrapper">
                 <div id="youtube-player"></div>
             </div>
+            
             <div id="yt-omr-controls-normal">
                 <div class="nav-bar">
                     <button class="nav-btn" id="yt-prev-btn"><i class="fas fa-chevron-left"></i></button>
                     <span id="yt-q-indicator-normal"></span>
                     <button class="nav-btn" id="yt-next-btn"><i class="fas fa-chevron-right"></i></button>
-                </div>
-                <div class="mcq-options">
-                    <button class="mcq-option" data-option="A">A</button>
-                    <button class="mcq-option" data-option="B">B</button>
-                    <button class="mcq-option" data-option="C">C</button>
-                    <button class="mcq-option" data-option="D">D</button>
                 </div>
                 <div class="status-buttons">
                     <button class="correct"><i class="fa-solid fa-check"></i> <span>सही</span></button>
@@ -154,23 +136,18 @@
                 <button id="youtube-finish-btn-normal">Finish</button>
             </div>
         </div>
+
         <div id="yt-omr-controls-compact">
             <i class="fas fa-grip-lines drag-handle"></i>
             <button class="nav-btn" id="yt-prev-btn-compact"><i class="fas fa-chevron-left"></i></button>
             <span id="yt-q-indicator-compact"></span>
             <button class="nav-btn" id="yt-next-btn-compact"><i class="fas fa-chevron-right"></i></button>
-            <div class="mcq-options">
-                <button class="mcq-option" data-option="A">A</button>
-                <button class="mcq-option" data-option="B">B</button>
-                <button class="mcq-option" data-option="C">C</button>
-                <button class="mcq-option" data-option="D">D</button>
-            </div>
             <div class="status-buttons">
                 <button class="correct"><i class="fa-solid fa-check"></i> <span>सही</span></button>
                 <button class="incorrect"><i class="fa-solid fa-xmark"></i> <span>गलत</span></button>
                 <button class="skip"><i class="fa-solid fa-forward"></i> <span>स्किप</span></button>
             </div>
-            <button id="youtube-finish-btn-compact"><i class="fas fa-flag-checkered"></i></button>
+            <button id="youtube-finish-btn-compact"><i class="fas fa-flag-checkered"></i><span>FINISH</span></button>
         </div>
     </div>
 
@@ -185,215 +162,228 @@
     </div>
 
     <script>
-        // DOM Elements
-        const views = document.querySelectorAll('.app-view');
-        const ytPlayBtn = document.getElementById('yt-play-btn');
-        const youtubeLinkInput = document.getElementById('youtube-link-input');
-        const youtubePlayer = document.getElementById('youtube-player');
-        
-        // Navigation Buttons
-        const prevBtn = document.getElementById('yt-prev-btn');
-        const nextBtn = document.getElementById('yt-next-btn');
-        const prevBtnCompact = document.getElementById('yt-prev-btn-compact');
-        const nextBtnCompact = document.getElementById('yt-next-btn-compact');
-        
-        // Indicators
-        const qIndicatorNormal = document.getElementById('yt-q-indicator-normal');
-        const qIndicatorCompact = document.getElementById('yt-q-indicator-compact');
-        
-        // Draggable Controls
-        const controlsCompact = document.getElementById('yt-omr-controls-compact');
-        const dragHandle = controlsCompact.querySelector('.drag-handle');
-
-        // Results Elements
-        const reportVideoLink = document.getElementById('report-video-link');
-        const reportSummary = document.getElementById('report-summary');
-        const youtubeResultsGrid = document.getElementById('youtube-results-grid');
-        const printBtn = document.getElementById('print-btn');
-
-        // State
-        let ytCurrentQuestionNum = 1;
-        let ytMaxQuestionNum = 1;
-        let ytAnswers = [];
-        let originalVideoUrl = '';
-
-        // --- Navigation and State Management ---
-        function navigateTo(hash) {
-            if(window.location.hash !== hash) {
-                history.pushState({ hash: hash }, '', hash);
-            }
-            updateView(hash);
-        }
-
-        function updateView(hash) {
-            views.forEach(view => {
-                view.classList.toggle('active', '#' + view.id === hash);
-            });
-        }
-        
-        window.onpopstate = function(event) {
-            const hash = (event.state && event.state.hash) ? event.state.hash : '#link-view';
-            updateView(hash);
-        };
-        
         document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const views = document.querySelectorAll('.app-view');
+            const ytPlayBtn = document.getElementById('yt-play-btn');
+            const youtubeLinkInput = document.getElementById('youtube-link-input');
+            const youtubePlayer = document.getElementById('youtube-player');
+            const omrView = document.getElementById('omr-view');
+            
+            const controlsNormal = document.getElementById('yt-omr-controls-normal');
+            const controlsCompact = document.getElementById('yt-omr-controls-compact');
+
+            const prevBtn = document.getElementById('yt-prev-btn');
+            const nextBtn = document.getElementById('yt-next-btn');
+            const prevBtnCompact = document.getElementById('yt-prev-btn-compact');
+            const nextBtnCompact = document.getElementById('yt-next-btn-compact');
+            
+            const qIndicatorNormal = document.getElementById('yt-q-indicator-normal');
+            const qIndicatorCompact = document.getElementById('yt-q-indicator-compact');
+            
+            const dragHandle = controlsCompact.querySelector('.drag-handle');
+
+            const reportVideoLink = document.getElementById('report-video-link');
+            const reportSummary = document.getElementById('report-summary');
+            const youtubeResultsGrid = document.getElementById('youtube-results-grid');
+            const printBtn = document.getElementById('print-btn');
+
+            // --- State ---
+            let ytCurrentQuestionNum = 1;
+            let ytMaxQuestionNum = 1;
+            let ytAnswers = [];
+            let originalVideoUrl = '';
+
+            // --- View & Orientation Management ---
+            function navigateTo(hash) {
+                if (window.location.hash !== hash) {
+                    history.pushState({ hash }, '', hash);
+                }
+                updateView(hash);
+            }
+
+            function updateView(hash) {
+                views.forEach(view => {
+                    view.classList.toggle('active', '#' + view.id === hash);
+                });
+            }
+
+            function checkOrientation() {
+                const isLandscape = window.innerWidth > window.innerHeight;
+                omrView.classList.toggle('fullscreen-video', isLandscape);
+                if (omrView.classList.contains('active')) {
+                    if (isLandscape) {
+                        controlsNormal.style.display = 'none';
+                        controlsCompact.style.display = 'flex';
+                    } else {
+                        controlsNormal.style.display = 'flex';
+                        controlsCompact.style.display = 'none';
+                    }
+                }
+            }
+            
+            window.onpopstate = (event) => {
+                const hash = (event.state && event.state.hash) ? event.state.hash : '#link-view';
+                updateView(hash);
+            };
+            
             const currentHash = window.location.hash || '#link-view';
             history.replaceState({ hash: currentHash }, '', currentHash);
             updateView(currentHash);
-            centerCompactBar();
-        });
+            checkOrientation();
+            window.addEventListener('resize', checkOrientation);
 
-        // --- Main Logic ---
-        function centerCompactBar() {
-            const bar = document.getElementById('yt-omr-controls-compact');
-            bar.style.left = `${(window.innerWidth - bar.offsetWidth) / 2}px`;
-        }
-
-        function getYouTubeID(url) {
-            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            return url.match(regex) ? url.match(regex)[1] : null;
-        }
-
-        ytPlayBtn.addEventListener('click', () => {
-            const videoId = getYouTubeID(youtubeLinkInput.value);
-            if (videoId) {
-                originalVideoUrl = youtubeLinkInput.value;
-                youtubePlayer.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                navigateTo('#omr-view');
-                setTimeout(centerCompactBar, 10);
-                renderYTQuestion(ytCurrentQuestionNum);
-            } else {
-                alert('कृपया एक सही यूट्यूब वीडियो लिंक डालें।');
+            // --- Main OMR Logic ---
+            function getYouTubeID(url) {
+                const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                return url.match(regex) ? url.match(regex)[1] : null;
             }
-        });
 
-        function renderYTQuestion(qNum) {
-            qIndicatorNormal.textContent = `प्रश्न ${qNum}`;
-            qIndicatorCompact.textContent = `Q ${qNum}`;
-            
-            const isFirstQ = qNum <= 1;
-            const isLastQ = qNum >= ytMaxQuestionNum;
-            [prevBtn, prevBtnCompact].forEach(b => b.disabled = isFirstQ);
-            [nextBtn, nextBtnCompact].forEach(b => b.disabled = isLastQ);
-
-            const answer = ytAnswers.find(a => a.question === qNum);
-            
-            document.querySelectorAll('.status-buttons button, .mcq-options button').forEach(btn => btn.classList.remove('selected'));
-
-            if (answer) {
-                if(answer.status) {
-                    document.querySelectorAll(`.status-buttons button.${answer.status}`).forEach(btn => btn.classList.add('selected'));
+            ytPlayBtn.addEventListener('click', () => {
+                const videoId = getYouTubeID(youtubeLinkInput.value);
+                if (videoId) {
+                    originalVideoUrl = youtubeLinkInput.value;
+                    youtubePlayer.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    navigateTo('#omr-view');
+                    checkOrientation();
+                    renderYTQuestion(ytCurrentQuestionNum);
+                } else {
+                    alert('कृपया एक सही यूट्यूब वीडियो लिंक डालें।');
                 }
-                if(answer.mcq) {
-                    document.querySelectorAll(`.mcq-options button[data-option="${answer.mcq}"]`).forEach(btn => btn.classList.add('selected'));
+            });
+
+            function renderYTQuestion(qNum) {
+                qIndicatorNormal.textContent = `प्रश्न ${qNum}`;
+                qIndicatorCompact.textContent = `Q${qNum}`;
+                
+                const isFirstQ = qNum <= 1;
+                const isLastQ = qNum >= ytMaxQuestionNum;
+                [prevBtn, prevBtnCompact].forEach(b => { b.disabled = isFirstQ; });
+                [nextBtn, nextBtnCompact].forEach(b => { b.disabled = isLastQ; });
+
+                const answer = ytAnswers.find(a => a.question === qNum);
+                document.querySelectorAll('.status-buttons button').forEach(btn => btn.classList.remove('selected'));
+
+                if (answer && answer.status) {
+                    document.querySelectorAll(`.status-buttons .${answer.status}`).forEach(btn => btn.classList.add('selected'));
                 }
             }
-        }
-        
-        function getAnswerObject(qNum) {
-            let answer = ytAnswers.find(a => a.question === qNum);
-            if (!answer) {
-                answer = { question: qNum, status: null, mcq: null };
-                ytAnswers.push(answer);
-            }
-            return answer;
-        }
-
-        function handleMcqSelect(selectedOption) {
-            const answer = getAnswerObject(ytCurrentQuestionNum);
-            answer.mcq = (answer.mcq === selectedOption) ? null : selectedOption;
-            renderYTQuestion(ytCurrentQuestionNum);
-        }
-
-        function handleYTSubmit(status) {
-            const answer = getAnswerObject(ytCurrentQuestionNum);
-            answer.status = status;
             
-            if (ytCurrentQuestionNum === ytMaxQuestionNum) {
-                ytMaxQuestionNum++;
+            function getAnswerObject(qNum) {
+                let answer = ytAnswers.find(a => a.question === qNum);
+                if (!answer) {
+                    answer = { question: qNum, status: null };
+                    ytAnswers.push(answer);
+                }
+                return answer;
             }
+
+            function handleYTSubmit(status) {
+                const answer = getAnswerObject(ytCurrentQuestionNum);
+                const isAlreadySelected = answer.status === status;
+                
+                answer.status = isAlreadySelected ? null : status; 
+                
+                if (!isAlreadySelected) {
+                    if (ytCurrentQuestionNum === ytMaxQuestionNum) {
+                        ytMaxQuestionNum++;
+                    }
+                    setTimeout(() => {
+                        ytCurrentQuestionNum++;
+                        renderYTQuestion(ytCurrentQuestionNum);
+                    }, 200);
+                } else {
+                     renderYTQuestion(ytCurrentQuestionNum);
+                }
+            }
+
+            function finishOMR() {
+                if (window.confirm("क्या आप वाकई टेस्ट समाप्त करना चाहते हैं?")) {
+                    navigateTo('#results-view');
+                    youtubePlayer.innerHTML = '';
+                    
+                    const correctCount = ytAnswers.filter(a => a.status === 'correct').length;
+                    const incorrectCount = ytAnswers.filter(a => a.status === 'incorrect').length;
+                    const skipCount = ytAnswers.filter(a => a.status === 'skip').length;
+                    reportSummary.innerHTML = `
+                        <span><i class="fa-solid fa-circle-check" style="color: var(--success-color);"></i> सही: ${correctCount}</span>
+                        <span><i class="fa-solid fa-circle-xmark" style="color: var(--danger-color);"></i> गलत: ${incorrectCount}</span>
+                        <span><i class="fa-solid fa-circle-minus" style="color: var(--text-secondary);"></i> स्किप: ${skipCount}</span>
+                    `;
+                    
+                    reportVideoLink.innerHTML = `<strong>वीडियो लिंक:</strong> <a href="${originalVideoUrl}" target="_blank" rel="noopener noreferrer">${originalVideoUrl}</a>`;
+
+                    youtubeResultsGrid.innerHTML = '';
+                    ytAnswers.sort((a,b) => a.question - b.question).forEach(ans => {
+                        if (!ans.status) return; // Don't show unanswered questions
+                        const item = document.createElement('div');
+                        item.className = 'result-item';
+                        
+                        let icon = '';
+                        if (ans.status === 'correct') icon = '<span class="icon correct-icon"><i class="fa-solid fa-square-check"></i></span>';
+                        else if (ans.status === 'incorrect') icon = '<span class="icon incorrect-icon"><i class="fa-solid fa-square-xmark"></i></span>';
+                        else icon = '<span class="icon skip-icon"><i class="fa-solid fa-square-minus"></i></span>';
+                        
+                        item.innerHTML = `<span class="q-num">Q${ans.question}</span> ${icon}`;
+                        youtubeResultsGrid.appendChild(item);
+                    });
+                }
+            }
+
+            // --- Event Listeners Setup ---
+            function goToPrevQuestion() { if (ytCurrentQuestionNum > 1) { ytCurrentQuestionNum--; renderYTQuestion(ytCurrentQuestionNum); } }
+            function goToNextQuestion() { if (ytCurrentQuestionNum < ytMaxQuestionNum) { ytCurrentQuestionNum++; renderYTQuestion(ytCurrentQuestionNum); } }
+
+            [prevBtn, prevBtnCompact].forEach(btn => btn.addEventListener('click', goToPrevQuestion));
+            [nextBtn, nextBtnCompact].forEach(btn => btn.addEventListener('click', goToNextQuestion));
             
-            ytCurrentQuestionNum++;
-            renderYTQuestion(ytCurrentQuestionNum);
-        }
-        
-        function finishOMR() {
-            if (window.confirm("क्या आप वाकई टेस्ट समाप्त करना चाहते हैं?")) {
-                navigateTo('#results-view');
-                youtubePlayer.innerHTML = ''; 
-                
-                const correctCount = ytAnswers.filter(a => a.status === 'correct').length;
-                const incorrectCount = ytAnswers.filter(a => a.status === 'incorrect').length;
-                const skipCount = ytAnswers.filter(a => a.status === 'skip').length;
-                reportSummary.innerHTML = `
-                    <span><i class="fa-solid fa-circle-check" style="color: var(--success-color);"></i> सही: ${correctCount}</span>
-                    <span><i class="fa-solid fa-circle-xmark" style="color: var(--danger-color);"></i> गलत: ${incorrectCount}</span>
-                    <span><i class="fa-solid fa-circle-minus" style="color: var(--text-secondary);"></i> स्किप: ${skipCount}</span>
-                `;
-                
-                reportVideoLink.innerHTML = `<strong>वीडियो लिंक:</strong> <a href="${originalVideoUrl}" target="_blank" rel="noopener noreferrer">${originalVideoUrl}</a>`;
+            document.querySelectorAll('.status-buttons .correct').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('correct')));
+            document.querySelectorAll('.status-buttons .incorrect').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('incorrect')));
+            document.querySelectorAll('.status-buttons .skip').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('skip')));
+            document.querySelectorAll('#youtube-finish-btn-normal, #youtube-finish-btn-compact').forEach(btn => btn.addEventListener('click', finishOMR));
+            printBtn.addEventListener('click', () => window.print());
 
-                youtubeResultsGrid.innerHTML = '';
-                ytAnswers.sort((a,b) => a.question - b.question).forEach(ans => {
-                    const item = document.createElement('div');
-                    item.className = 'result-item';
+            // --- Draggable Compact Controls Logic ---
+            function makeDraggable(element, handle) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                handle.onmousedown = dragMouseDown;
+
+                function dragMouseDown(e) {
+                    e = e || window.event;
+                    e.preventDefault();
                     
-                    let mcqDisplay = ans.mcq ? `<span class="result-mcq">${ans.mcq}</span>` : '';
-                    let icon = '';
-                    if (ans.status === 'correct') icon = '<span class="icon correct-icon"><i class="fa-solid fa-square-check"></i></span>';
-                    else if (ans.status === 'incorrect') icon = '<span class="icon incorrect-icon"><i class="fa-solid fa-square-xmark"></i></span>';
-                    else icon = '<span class="icon skip-icon"><i class="fa-solid fa-square-minus"></i></span>';
+                    const rect = element.getBoundingClientRect();
+                    element.style.transform = 'none';
+                    element.style.left = `${rect.left}px`;
+                    element.style.top = `${rect.top}px`;
                     
-                    item.innerHTML = `<span class="q-num">Q${ans.question}</span> ${mcqDisplay} ${icon}`;
-                    youtubeResultsGrid.appendChild(item);
-                });
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+
+                    document.onmouseup = closeDragElement;
+                    document.onmousemove = elementDrag;
+                }
+
+                function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    
+                    element.style.top = `${element.offsetTop - pos2}px`;
+                    element.style.left = `${element.offsetLeft - pos1}px`;
+                }
+
+                function closeDragElement() {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
             }
-        }
-
-        // --- Event Listeners ---
-        function goToPrevQuestion() { if (ytCurrentQuestionNum > 1) { ytCurrentQuestionNum--; renderYTQuestion(ytCurrentQuestionNum); } }
-        function goToNextQuestion() { if (ytCurrentQuestionNum < ytMaxQuestionNum) { ytCurrentQuestionNum++; renderYTQuestion(ytCurrentQuestionNum); } }
-
-        [prevBtn, prevBtnCompact].forEach(btn => btn.addEventListener('click', goToPrevQuestion));
-        [nextBtn, nextBtnCompact].forEach(btn => btn.addEventListener('click', goToNextQuestion));
-        
-        document.querySelectorAll('.mcq-options button').forEach(btn => btn.addEventListener('click', () => handleMcqSelect(btn.dataset.option)));
-        document.querySelectorAll('.status-buttons .correct').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('correct')));
-        document.querySelectorAll('.status-buttons .incorrect').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('incorrect')));
-        document.querySelectorAll('.status-buttons .skip').forEach(btn => btn.addEventListener('click', () => handleYTSubmit('skip')));
-        document.querySelectorAll('#youtube-finish-btn-normal, #youtube-finish-btn-compact').forEach(btn => btn.addEventListener('click', finishOMR));
-        printBtn.addEventListener('click', () => window.print());
-
-        // --- Draggable Compact Controls Logic ---
-        function makeDraggable(element, handle) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            handle.addEventListener('mousedown', dragMouseDown);
-
-            function dragMouseDown(e) {
-                e.preventDefault();
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.addEventListener('mousemove', elementDrag);
-                document.addEventListener('mouseup', closeDragElement);
-            }
-
-            function elementDrag(e) {
-                e.preventDefault();
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                element.style.top = (element.offsetTop - pos2) + "px";
-                element.style.left = (element.offsetLeft - pos1) + "px";
-            }
-
-            function closeDragElement() {
-                document.removeEventListener('mousemove', elementDrag);
-                document.removeEventListener('mouseup', closeDragElement);
-            }
-        }
-        makeDraggable(controlsCompact, dragHandle);
-        
+            makeDraggable(controlsCompact, dragHandle);
+        });
     </script>
 </body>
 </html>
