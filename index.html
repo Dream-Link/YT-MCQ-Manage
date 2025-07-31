@@ -14,7 +14,8 @@
         }
         .app-view { display: none; }
         .app-view.active { display: block; }
-        .container { width: 100%; background-color: var(--surface-color); box-sizing: border-box; min-height: 100vh; position: relative; padding: 28px; }
+        .container { width: 100%; box-sizing: border-box; min-height: 100vh; position: relative; padding: 28px; }
+        #omr-view > .container { padding-top: 0; }
 
         /* --- Link (Home) View --- */
         #link-view .container { padding-top: 60px; text-align: center; }
@@ -69,8 +70,20 @@
         #yt-omr-controls-compact .status-buttons button { padding: 8px 12px; font-size: 0.9em; border-radius: 12px; background: rgba(255,255,255,0.15); color:white; }
         #yt-omr-controls-compact .pause-btn, #yt-omr-controls-compact .finish-btn { border-radius: 12px; padding: 8px 12px; font-size:1.4em; }
         
-        /* Landscape Fullscreen Video */
-        .fullscreen-video #yt-player-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2000; margin: 0; border-radius:0; }
+        /* Landscape Fullscreen Video - UPDATED FOR CORRECT FIT */
+        .fullscreen-video #yt-player-wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: 100vh; /* Fit to height */
+            aspect-ratio: 16 / 9; /* Maintain 16:9 ratio */
+            max-width: 100vw; /* Don't exceed screen width */
+            z-index: 2000;
+            margin: 0;
+            border-radius: 0;
+        }
         .fullscreen-video #yt-omr-controls-normal { display: none !important; }
         
         /* --- Results & History --- */
@@ -99,10 +112,10 @@
     </div>
 
     <div id="omr-view" class="app-view">
+        <div id="yt-player-wrapper">
+            <div id="player-target"></div>
+        </div>
         <div class="container">
-            <div id="yt-player-wrapper">
-                <div id="player-target"></div>
-            </div>
             <div id="yt-omr-controls-normal">
                 <div class="nav-bar">
                     <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
@@ -207,7 +220,6 @@
         
         function onPlayerReady(event) {
             renderYTQuestion(ytCurrentQuestionNum);
-            if (event.target.getPlayerVars().autoplay === 0) { event.target.pauseVideo(); }
         }
 
         function checkOrientation() {
@@ -268,7 +280,8 @@
         function resumeTest(progressData) {
             ({ videoUrl: originalVideoUrl, videoId, answers: ytAnswers, currentQuestion: ytCurrentQuestionNum, maxQuestion: ytMaxQuestionNum } = progressData);
             updateView('omr');
-            createPlayer(videoId, progressData.videoTime, 0);
+            // Autoplay on resume as requested
+            createPlayer(videoId, progressData.videoTime, 1);
         }
         
         function pauseAndSaveProgress() {
